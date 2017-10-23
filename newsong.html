@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html ng-app="songs">
+<head>
+    <title>My favorite songs</title>
+
+    <!-- Link to bootstrap -->    
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<!-- AngularJS-->
+<script src="angular.min.js"></script>
+
+<!-- song module -->
+<script type="text/javascript" src="songs.module.js"></script>
+
+<!-- data controller -->
+<script type="text/javascript" src="data.songs.controller.js"></script>
+
+<!-- trust Html filter -->
+<script type="text/javascript" src="songs.filter.js"></script>
+
+</head>
+
+
+<body>
+<!-- container for my content -->
+<div class="container" ng-controller='dataControl'>
+
+<!-- title -->
+<div ng-include ng-init="menuHighlight=1;" src="'header.html'"></div>
+
+<!-- content -->
+<h3>Enter New Song</h3>
+
+<!-- Form -->
+<form name="enterSongForm" novalidate>
+    <!-- Name -->
+    <div class="form-group" ng-class = "{'has-error':enterSongForm.name.$invalid && enterSongForm.name.$touched, 'has-success':!enterSongForm.name.$invalid && enterSongForm.name.$touched }">
+        <label>Name:</label>
+        <input type="text" class="form-control" name="name" ng-model="song.name" required/>
+        <p ng-show = "enterSongForm.name.$invalid && enterSongForm.name.$touched" class="help-block">It is required to enter the name of a song</p>
+    </div>
+    
+    <!-- Artist -->
+    <div class="form-group" ng-class = "{'has-error':enterSongForm.artist.$invalid && enterSongForm.artist.$touched, 'has-success':!enterSongForm.artist.$invalid && enterSongForm.artist.$touched }">
+        <label>Artist:</label>
+        <input type="text" class="form-control" name="artist" ng-model="song.artist" required/>
+        <p ng-show = "enterSongForm.artist.$invalid && enterSongForm.artist.$touched" class="help-block">It is required to enter the name of a artist</p>
+    </div>
+    
+        <!-- Album -->
+    <div class="form-group" ng-class = "{'has-error':enterSongForm.album.$invalid && enterSongForm.album.$touched, 'has-success':!enterSongForm.album.$invalid && enterSongForm.album.$touched }" >
+        <label>Album:</label>
+        <input type="text" class="form-control" name="album" ng-model="song.album" required/>
+        <p ng-show = "enterSongForm.album.$invalid && enterSongForm.album.$touched" class="help-block">It is required to enter the name of a album</p>
+    </div>
+    
+        <!-- Year Released -->
+    <div class="form-group" ng-class = "{'has-error':enterSongForm.year_released.$invalid && enterSongForm.year_released.$touched, 'has-success':!enterSongForm.year_released.$invalid}">
+        <label>Year Released:</label>
+        <input type="text" class="form-control" name="year_released" ng-model="song.year_released" ng-pattern="/^(19\d\d||200[0-9]||201[0-7])$/" required/>
+        <p ng-show = "enterSongForm.year_released.$invalid && enterSongForm.year_released.$touched" class="help-block">It is required to enter a year between 1900 and 2017</p>
+    </div>
+    
+        <!-- Video -->
+    <div class="form-group" ng-class = "{'has-error':enterSongForm.video.$invalid && enterSongForm.video.$touched, 'has-success':!enterSongForm.video.$invalid && enterSongForm.video.$touched }">
+        <label>Video:</label> 
+        <input type="text" class="form-control" name="video" ng-model="song.video" required/>
+        <p ng-show = "enterSongForm.video.$invalid && enterSongForm.video.$touched" class="help-block">It is required to enter the url for a video</p>
+    </div>
+    
+    <!-- Button to submit form -->
+    <button class="btn btn-default" ng-click="saveSong(song)" ng-disabled="enterSongForm.$invalid">Save</button>
+    
+</form>
+
+<!-- footer -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel">
+            <div class="panel-body">
+                <p>This is for HW6, Fall 2017</p>
+            </div>
+        </div>
+    </div>     
+</div>
+    
+</div> 
+
+
+</body>
+</html>
