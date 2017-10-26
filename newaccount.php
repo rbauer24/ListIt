@@ -7,6 +7,8 @@
     $username = $data['username'];
 	$password = $data['password'];
 	$password2 = $data['password2'];
+	$email = $data['email'];
+	$location = $data['location'];
     
    // connect to the database
     $db = connectDB($dbhost, $dbuser, $dbpassword, $dbname);    
@@ -21,6 +23,15 @@
     } else {
         $username = makeStringSafe($db, $username);
     }
+	
+	if (!isset($email)) {
+		$errorMessage .= " Please enter an email.";
+    $isComplete = false;
+	}
+
+	if (!isset($location)) {
+		$errorMessage .= " Please enter your location.";
+    $isComplete = false;
 
     if (!isset($password)) {
         $errorMessage .= " Please enter a password.";
