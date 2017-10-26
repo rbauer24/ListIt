@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
-<html ng-app="songs">
+<html ng-app="ListIt">
 <head>
-    <title>Favorite Songs - New account</title>
+    <title>ListIt - New account</title>
        
 
     <!-- JQuery -->
@@ -58,6 +58,20 @@
     <label>Userame:</label>
     <input type="text" class="form-control" name="username" ng-model="account.username" required/>
     <p ng-show="accountForm.username.$invalid && accountForm.username.$touched" class="help-block">The username is required.</p>
+</div>
+
+<!-- email -->
+<div class="form-group" ng-class="{ 'has-error' : accountForm.email.$invalid && accountForm.email.$touched, 'has-success' : !accountForm.email.$invalid && accountForm.email.$touched }">
+    <label>Email:</label>
+    <input type="text" class="form-control" name="email" ng-model="account.email" required/>
+    <p ng-show="accountForm.email.$invalid && accountForm.email.$touched" class="help-block">The email address is required.</p>
+</div>
+
+<!-- Location -->
+<div class="form-group" ng-class="{ 'has-error' : accountForm.location.$invalid && accountForm.location.$touched, 'has-success' : !accountForm.location.$invalid && accountForm.location.$touched }">
+    <label>Location:</label>
+    <input type="location" class="form-control" name="location" ng-model="account.location" required/>
+    <p ng-show="accountForm.location.$invalid && accountForm.location.$touched" class="help-block">The password is required.</p>
 </div>
 
 <!-- password -->
