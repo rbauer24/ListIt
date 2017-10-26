@@ -5,6 +5,6 @@
 
 (function () {
     'use strict';
-    angular.module("songs", []);
+    angular.module("ListIt", []);
     
 } )();

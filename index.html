@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 
-<html ng-app="songs">
+<html ng-app="ListIt">
 <head>
-    <title>My favorite songs</title>
+    <title>ListIt</title>
 
+<!-- Table styling-->
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 {
+    width: 100%;    
+    background-color: #f1f1c1;
+}
+</style>    
+    
+    
+    
 <!-- JQuery -->
 <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 
-    <!-- Link to bootstrap -->    
+<!--
+<!-- Link to bootstrap -->    
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -50,101 +69,103 @@
     </div>
 </div>
 
-<!--Songs-->
-<div class="panel panel-default" ng-repeat='song in songs | filter: query'>
-    
-    <div ng-init = "setEditMode(false, song)"></div>
-    
-    <!-- panel in read mode -->
-    <div ng-if="!getEditMode(song)">
-        <div class="panel-heading">
-            <h4>{{song.name}}</h4>
+
+
+<!--Lists-->
+<div class="container">
+    <div class="row">
+        <div class="card" style="width: 100rem;">
+          <img class="card-img-top" src="..." alt="Picture of user">
+          <div class="card-block" row>
+            <h4 class="card-title">Top NBA Players</h4>
+          </div>
+          <div>
+            <table cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1. Kevin Durant</th>
+                        <th>Warriors</th>
+                    </tr>
+                    <tr>
+                        <th>2. LeBron James</th>
+                        <th>Cavs</th>
+                    </tr>
+                    <tr>
+                        <th>3. Kawhi Leonard</th>
+                        <th>Spurs</th>
+                    </tr>
+                    <tr>
+                        <th>4. Russell Westbrook</th>
+                        <th>Thunder</th>
+                    </tr>
+                    <tr>
+                        <th>5. James Harden</th>
+                        <th>Rockets</th>
+                    </tr>    
+                </tbody>
+            </table>
+          </div>
+          <div class="card-block">
+            <a src="myprofile.html" class="card-link" alt="Link to user profile">Link to user's profile</a>
+          </div>
         </div>
-        <div class="panel-body">
-            <div class="col-sm-6 col-xs-12">
-                <div class="embed-responsive embed-responsive-16by9">
-                <span ng-bind-html = "song.video | trustHtml"></span>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xs-12">
-                <p><strong>Artist: </strong>{{song.artist}}</p>
-                <p><strong>Album: </strong>{{song.album}}</p>
-                <p><strong>Year Released: </strong>{{song.year_released}}</p>
-                <p><button class="btn btn-primary" ng-show="isloggedin" ng-click="setEditMode(true, song)">Edit</button></p>
-                <p><button class="btn btn-primary" ng-show="isloggedin" ng-click="deleteSong(song.name, song.id)">Delete</button></p>
-            </div>
+    </div>
+    </br>
+    </br>
+    </br>
+    <div class="row">
+        <div class="card" style="width: 100rem;">
+          <img class="card-img-top" src="..." alt="Picture of user">
+          <div class="card-block" row>
+            <h4 class="card-title">Top Movies of all time</h4>
+          </div>
+          <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Year Released</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1. The Shawshank Redemption</th>
+                        <th>1994</th>
+                    </tr>
+                    <tr>
+                        <th>2. The Godfather</th>
+                        <th>1972</th>
+                    </tr>
+                    <tr>
+                        <th>3. The Godfather: Part II</th>
+                        <th>1974</th>
+                    </tr>
+                    <tr>
+                        <th>4. The Dark Knight</th>
+                        <th>2008</th>
+                    </tr>
+                    <tr>
+                        <th>5. 12 Angry Men</th>
+                        <th>1957</th>
+                    </tr>    
+                </tbody>
+            </table>
+          </div>
+          <div class="card-block">
+            <a src="myprofile.html" class="card-link" alt="Link to user profile">Link to user's profile</a>
+          </div>
         </div>
     </div>
     
-     <!-- panel in edit mode -->
-    <div ng-if="getEditMode(song)">
-        <form name="enterSongForm" novalidate>
-            <div class="panel-heading">
-                <!-- Name -->
-                <div class="form-group" ng-class = "{'has-error':enterSongForm.name.$invalid && enterSongForm.name.$touched, 'has-success':!enterSongForm.name.$invalid && enterSongForm.name.$touched }">
-                    <label>Name:</label>
-                    <input type="text" class="form-control" name="name" ng-model="editSong.name" required/>
-                    <p ng-show = "enterSongForm.name.$invalid && enterSongForm.name.$touched" class="help-block">It is required to enter the name of a song</p>
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="col-sm-6 col-xs-12">
-                    <div class="embed-responsive embed-responsive-16by9">
-                    <span ng-bind-html = "song.video | trustHtml"></span>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                    <!-- Artist -->
-                    <div class="form-group" ng-class = "{'has-error':enterSongForm.artist.$invalid && enterSongForm.artist.$touched, 'has-success':!enterSongForm.artist.$invalid && enterSongForm.artist.$touched }">
-                        <label>Artist:</label>
-                        <input type="text" class="form-control" name="artist" ng-model="editSong.artist" required/>
-                        <p ng-show = "enterSongForm.artist.$invalid && enterSongForm.artist.$touched" class="help-block">It is required to enter the name of a artist</p>
-                    </div>
-                    
-                    <!-- Album -->
-                    <div class="form-group" ng-class = "{'has-error':enterSongForm.album.$invalid && enterSongForm.album.$touched, 'has-success':!enterSongForm.album.$invalid && enterSongForm.album.$touched }" >
-                        <label>Album:</label>
-                        <input type="text" class="form-control" name="album" ng-model="editSong.album" required/>
-                        <p ng-show = "enterSongForm.album.$invalid && enterSongForm.album.$touched" class="help-block">It is required to enter the name of a album</p>
-                    </div>
-                    
-                    <!-- Year Released -->
-                    <div class="form-group" ng-class = "{'has-error':enterSongForm.year_released.$invalid && enterSongForm.year_released.$touched, 'has-success':!enterSongForm.year_released.$invalid}">
-                        <label>Year Released:</label>
-                        <input type="text" class="form-control" name="year_released" ng-model="editSong.year_released" ng-pattern="/^(19\d\d||200[0-9]||201[0-7])$/" required/>
-                        <p ng-show = "enterSongForm.year_released.$invalid && enterSongForm.year_released.$touched" class="help-block">It is required to enter a year between 1900 and 2017</p>
-                    </div>
-                    
-                    <!-- Video -->
-                    <div class="form-group" ng-class = "{'has-error':enterSongForm.video.$invalid && enterSongForm.video.$touched, 'has-success':!enterSongForm.video.$invalid && enterSongForm.video.$touched }">
-                        <label>Video:</label> 
-                        <input type="text" class="form-control" name="video" ng-model="editSong.video" required/>
-                        <p ng-show = "enterSongForm.video.$invalid && enterSongForm.video.$touched" class="help-block">It is required to enter the url for a video</p>
-                    </div>
-                    
-                    <p><button class="btn btn-primary" ng-click="updateSong(editSong, song.id)">Save</button></p>
-                    <p><button class="btn btn-primary" ng-click="setEditMode(false, song)">Cancel</button></p>
-                </div>
-            </div>
-        </form>
-    </div>
-    
 </div>
-
-
-<!-- footer -->
-<div class="row">
-    <div class="col-xs-12">
-        <div class="panel">
-            <div class="panel-body">
-                <p>This is for HW6, Fall 2017</p>
-            </div>
-        </div>
-    </div>     
-</div>
-    
-</div> 
-
-
 </body>
 </html>
+
+
+

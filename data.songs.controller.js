@@ -5,7 +5,7 @@
 
 (function() {
     'use strict';
-    var myApp = angular.module("songs");
+    var myApp = angular.module("ListIt");
     myApp.controller('dataControl', function($scope, $http, $window) {
         
         
