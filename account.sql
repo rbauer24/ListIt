@@ -5,5 +5,7 @@ CREATE TABLE account (
     id INT NOT NULL AUTO_INCREMENT,
     hashedpass VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
+		email VARCHAR(300) NOT NULL,
+		location VARCHAR(255) NOT NULL,
     PRIMARY KEY (ID)
 );
