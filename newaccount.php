@@ -30,8 +30,9 @@
 	}
 
 	if (!isset($location)) {
-		$errorMessage .= " Please enter your location.";
+		$errorMessage .= " Please enter where are you from.";
     $isComplete = false;
+	}
 
     if (!isset($password)) {
         $errorMessage .= " Please enter a password.";
