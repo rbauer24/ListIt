@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html ng-app="ListIt">
+<head>
+    <title>ListIt</title>
+
+<!-- Table styling-->
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 {
+    width: 100%;    
+    background-color: #f1f1c1;
+}
+</style>    
+    
+    
+    
+<!-- JQuery -->
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+
+<!--
+<!-- Link to bootstrap -->    
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<!-- AngularJS-->
+<script src="angular.min.js"></script>
+
+<!-- song module -->
+<script type="text/javascript" src="list.module.js"></script>
+
+<!-- data controller -->
+<script type="text/javascript" src="data.list.controller.js"></script>
+
+<!-- trust Html filter -->
+<script type="text/javascript" src="list.filter.js"></script>
+
+</head>
+
+
+<body>
+<!-- container for my content -->
+<div class="container" ng-controller='dataControl'>
+
+<!-- title-->
+<div ng-include ng-init="menuHighlight=0;" src="'header.html'"></div>
+
+
+<!-- content -->
+
+<!-- Search bar -->
+<div class='row'>
+    <div class='col-xs-12'>
+        <p> Search: <input ng-model ='query[queryBy]' /></p>
+    </div>
+</div>
+
+
+<!-- added according to JP's index.html -->
+<!-- Lists -->
+<div ng-repeat="list in data">
+    <h2>{{list.name}}</h2>
+<div class="panel panel-default" ng-repeat="item in list.items | filter:query">
+    <div class="panel-heading">
+            <h4>{{item.name}}</h4>
+        </div>
+    <div ng-repeat="attribute in item.attributes">
+        <div ng-if="attribute.type=='text'">
+            <strong>{{attribute.label}}</strong>: {{attribute.value}}
+        </div>
+        <div ng-if="attribute.type=='video'">
+            <div class="embed-responsive embed-responsive-16by9">
+                <span ng-bind-html="attribute.value | trustHtml"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+</body>
+</html>
+
+
+
