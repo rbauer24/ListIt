@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html ng-app="ListIt">
+<head>
+    <title>ListIt - Manage your List</title>
+       
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>      
+    
+    <!-- bootstrap links -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    
+    <!-- end of bootstrap links -->
+    
+    <!-- AngularJS -->
+    <script src="angular.min.js"></script>
+    
+    <!-- soccer module -->
+    <script type="text/javascript" src="list.module.js"></script>
+    
+    <!-- data controller -->
+    <script type="text/javascript" src="data.list.controller.js"></script>
+
+</head>
+
+<body>
+    
+    
+    <!-- Content -->
+    <div class="container" ng-controller="dataControl">
+
+    <!-- Title -->
+    <div ng-include ng-init="menuHighlight = 1;"src="'header.html'"></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Manage your List</h1>
+        </div>    
+    </div>
+    
+    <!-- for adding in Attributes to show on the editlist page-->
+    
+    <div ng-init="getAttr()">
+        <form name="enterItemForm" novalidate>
+            <div ng-repeat="attr in attrs track by $index">
+                {{attr.label}} <input type="text" class="form-control" ng-model="newitem.value[$index]" required/>
+                <!-- problem: how to use form -->
+               <p ng-show="enterItemForm.$invalid && enterItemForm.$touched" class="help-block">Please enter some value for this Item.</p>
+            </div>
+            <button class="btn btn-default" ng-click=" newitem(newitem.value)" ng-disabled="accountForm.$invalid"> Save/ Add More </button>
+        </form>
+    </div>
+    
+    <!-- loads up current list information if you are editing an existing list-->
+    
+    <!-- needs not to load from last created list but need to load from current list selected-->
+    <div>
+       <!-- content to see current list info-->
+       <!-- Lists -->
+       <div ng-init='getcurrentlistid()'></div>
+<div ng-repeat="list in data | filter:areaEdit">
+    <h2>{{list.name}}</h2>
+<div class="panel panel-default" ng-repeat="item in list.items | filter:query">
+    <div class="panel-heading">
+            <h4>{{item.name}}</h4>
+        </div>
+    <div ng-repeat="attribute in item.attributes">
+        <div ng-if="attribute.type=='text'">
+            <strong>{{attribute.label}}</strong>: {{attribute.value}}
+        </div>
+        <div ng-if="attribute.type=='video'">
+            <div class="embed-responsive embed-responsive-16by9">
+                <span ng-bind-html="attribute.value | trustHtml"></span>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    
+    
+</html>

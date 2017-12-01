@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html ng-app="ListIt">
+<head>
+    <title>ListIt - New list: choose a template</title>
+       
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>      
+    
+    <!-- bootstrap links -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    
+    <!-- end of bootstrap links -->
+    
+    <!-- AngularJS -->
+    <script src="angular.min.js"></script>
+    
+    <!-- soccer module -->
+    <script type="text/javascript" src="list.module.js"></script>
+    
+    <!-- data controller -->
+    <script type="text/javascript" src="data.list.controller.js"></script>
+
+</head>
+
+<body>
+    
+    
+    <!-- Content -->
+    <div class="container" ng-controller="dataControl">
+
+    
+    <!-- Title -->
+    <div ng-include ng-init="menuHighlight = 1;"src="'header.html'"></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>New List From Template</h1>
+        </div>    
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12">
+        
+        <!-- ask the user to enter the name of the list
+             and create a new entry in database: list table with the list name
+             the code is from hw4 index.html
+             the code might need to be changed
+             -->
+        
+        <form name="enterListName" novalidate>
+
+        <div class="form-group" ng-class="{ 'has-error' : enterListName.name.$invalid && enterListName.name.$touched, 'has-success' : !enterListName.name.$invalid && enterListName.name.$touched }">
+            <label>Enter the name of the list:</label>
+            <input type="text" class="form-control" name="name" ng-model="list.name" required/>
+            <p ng-show="enterListName.name.$invalid && enterListName.name.$touched" class="help-block">Please enter a name for the new list (1 character at least).</p>
+        </div>
+        
+        
+        <!-- new code-->
+        
+        <div class= "row">
+            <div class=" col-xs-12">
+            <h2> Option 1: Select Template</h2>
+            <select ng-model="list.template_id">
+                <option ng-repeat="template in templates" value="{{template.id}}">{{template.t_name}}</option> 
+            </select>
+            <button class="btn btn-default" ng-click="newList(list)" ng-disabled="accountForm.$invalid">Create New</button>
+            </div>
+        </div>
+        
+               
+        <!-- dropdown menu to create user's own template, currently disabled -->
+        
+        <div>
+            <h2> Option 2: Create Your Own Template</h2>
+            <button type="button" class="btn btn-primary disabled btn-block">Create Your Own Template</button>
+        </div>
+    
+        </div>
+    </div>
+
+</body>
+
+</html>
