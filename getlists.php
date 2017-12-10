@@ -3,15 +3,26 @@
     include_once('dbutils.php');
     // according to JP
     
+session_start();
+$session_id= $_SESSION['account_id'];
+
     // connect to the database
     $db = connectDB($DBHost, $DBUser, $DBPassword, $DBName);
     
-    // set up a query to get the list of lists
+    //check if logged in
+    if (!isset($session_id)) {
+    // if no id was passed, then we fail
     $query = "SELECT * FROM list";
     
-    // run the query
-    $result = queryDB($query, $db);
-    
+} else {
+    // if logged in
+        // fancy query with whether they
+        $query="SELECT list.id,list.name,list.template_id,list.account_id,list.visible,list.votes, case when list.id in (SELECT list_id from VOTES WHERE account_id=$session_id) then 'yes' else 'no' end as voted from list";
+        
+}
+
+$result = queryDB($query, $db);
+
     // assign results to array
     $lists = array();
     $i = 0;
@@ -21,7 +32,7 @@
         $listid = $list['id'];
         
         // now get the items under the current list
-        $query = "SELECT * FROM item WHERE list_id = $listid ORDER BY ordernumber";
+        $query = "SELECT * FROM item WHERE list_id = $listid AND visible=1 ORDER BY ordernumber";
         
         // run the query
         $result_item = queryDB($query, $db);

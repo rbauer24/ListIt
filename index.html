@@ -56,8 +56,8 @@
 <div class="row">
   <div class="col-xs-12">
     <h4>Select topic</h4>
-    <a ng-click="selectArea(null)" class="btn btn-default" role="button" ng-class="getAreaClass('all')">all</a>
-    <a ng-click="selectArea('mine')" class="btn btn-default" role="button" ng-class="getAreaClass('mine')">My List</a>
+    <a ng-click="selectArea(null)" class="btn btn-default" ng-show="isloggedin" role="button" ng-class="getAreaClass('all')">all</a>
+    <a ng-click="selectArea('mine')" class="btn btn-default" ng-show="isloggedin" role="button" ng-class="getAreaClass('mine')">My List</a>
     <!-- add this in once we create and setup followers system-->
     <!--<a ng-click="selectArea('mine')" class="btn btn-default" role="button" ng-class="getAreaClass('mine')">Mine /Followers List</a>  -->
   </div>
@@ -65,10 +65,11 @@
 
 <!--This loads Lists according to what topic you selected -->
 <div ng-repeat="list in data | filter:areaFilter">
-    <h2>{{list.name}}</h2>
+    <h2>{{list.name}}</h2><p><button class="btn btn-primary" ng-show="isloggedin" ng-disabled="list.voted== 'yes'" ng-click="voteforlist(list.id)">LIKE</button></p> <!-- this should send list id, account id, that you are voting back to php-->
+    <h4>Number of Likes: {{list.votes}}</h4>
 <div class="panel panel-default" ng-repeat="item in list.items | filter:query">
     <div class="panel-heading">
-            <h4>{{item.name}}</h4>
+            <h4>{{account.name}}</h4>
         </div>
     <div ng-repeat="attribute in item.attributes">
         <div ng-if="attribute.type=='text'">

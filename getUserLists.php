@@ -10,7 +10,7 @@
 		$session_account_id = $_SESSION['account_id'];
 		
     // set up a query to get the list of lists
-    $query = "SELECT * FROM list WHERE account_id=$session_account_id";
+    $query = "SELECT * FROM list WHERE account_id=$session_account_id AND visible=1";
     
     // run the query
     $result = queryDB($query, $db);

@@ -10,9 +10,10 @@
         $data = json_decode(file_get_contents('php://input'), true);
         $listid = $data['listid'];
         
+		// start the session and get listid and go through template_id to overwite the old one
         session_start();
         $_SESSION['listid']=$listid;
-        $query= "SELECT template_id FROM list WHERE id=$listid";
+        $query= "SELECT template_id FROM list WHERE id=$listid AND visible=1";
         $result=  queryDB($query, $db);
         $row = nextTuple($result);
         $_SESSION['template_id'] = $row['template_id'];

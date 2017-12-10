@@ -38,7 +38,7 @@ if (!isset($session_list_id)) {
 		$isComplete = false;
 } else {
 		// check if the id is in the table
-		$query = "SELECT * FROM list WHERE id=$session_list_id";
+		$query = "SELECT * FROM list WHERE id=$session_list_id AND visible=1";
 	
 		// run the query
 		$result = queryDB($query, $db);

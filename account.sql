@@ -12,5 +12,5 @@ CREATE TABLE account (
 
 INSERT INTO account (hashedpass, username, email, location) values ('$2a$12$s7h33TRR.wjhdKVdNIGON.pBVHlr2rancX6TxExL2UpLjTu.0TdbK', 'jqmeyers', 'jeremiah-meyers@uiowa.edu', 'Chicago');
 INSERT INTO account (hashedpass, username, email, location) values ('$2a$12$4W4ej8SBkW6Z7wwEnG885OFemfYEPBTD1abWdg9ep0DqvZGc8LwyO','rjbauer','robert-j-bauer@uiowa.edu','Cary');
-INSERT INTO account (hashedpass, username, email, location) values ('$2a$12$FqVuPRs7P3A3mlzneMnzC.FRUB6bLqk6mhGpQT00XY7kdD1.XZSuq','ddy', 'yu-dai@uiowa.edu', 'China');                                               |          |
-)
+INSERT INTO account (hashedpass, username, email, location) values ('$2a$12$FqVuPRs7P3A3mlzneMnzC.FRUB6bLqk6mhGpQT00XY7kdD1.XZSuq','ddy', 'yu-dai@uiowa.edu', 'China');
+INSERT INTO account (hashedpass, username, email, location) values ('$2a$12$GGZp2jI2UQ1078jvKVgZRO4oWFY4HpYUHb1qu75XRMoXDwj55rA..','general','a','iowa city');

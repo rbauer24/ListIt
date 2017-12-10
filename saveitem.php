@@ -22,7 +22,7 @@ $data = json_decode(file_get_contents('php://input'), true);
     $result = queryDB($query, $db);
     
     // figure out the order to input into newitem
-    $query = "SELECT max(ordernumber) AS maxorder FROM item  WHERE list_id=$session_list_id";
+    $query = "SELECT max(ordernumber) AS maxorder FROM item  WHERE list_id=$session_list_id AND visible=1";
     // run the query
     $itemresult = queryDB ($query,$db);
     

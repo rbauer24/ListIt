@@ -7,8 +7,99 @@
     var myApp = angular.module("ListIt");
     myApp.controller("dataControl", function($scope, $http, $window) {
 		
+         // vote for list
+        $scope.voteforlist = function(list) {
+            var id = angular.copy(list);
+            
+             $http.post("votes.php", {"id":id}) // needs to send list_id for the list being voted on
+                .then(function (response) {
+                if (response.status == 200) {
+                    if (response.data.status == 'error') {
+                        alert ('error: ' + response.data.message);
+                    } else {
+                        //successful
+                        $window.location.href ="index.html"; // doesn't need to reload page
+                    }
+                } else {
+                    alert('unexpected error');
+                }
+            });
+        };
         
-       
+        
+        // function to update a item
+        $scope.updateitem = function(value, itemid) {
+			var newitemvalue = angular.copy(value);
+            var dataupload = {"itemid":itemid, "data":newitemvalue};
+					
+            
+			$http.post("updateitem.php", dataupload)
+							.then(function(response) {
+                                
+					if (response.status == 200) {
+                        if (response.data.status == 'error') {
+                            alert ('error: ' + response.data.message);
+                        } else {
+                            //successful
+                            $window.location.href ="editlist.html";		// reload page
+                        }
+                    } else {
+                        alert('unexpected error');
+					}
+            });
+      };
+        
+        
+         /*
+         * Function to edit a particular item
+         * on -- boolean to say whether we want to edit item
+         * item -- the item that we want to apply this to
+         */
+        $scope.seteditmode = function(on, item) {
+            if (on) {
+                // put it in edit mode
+                
+                $scope.edititem = [];
+                $scope.edititem.value = [];
+                
+                // needs to change so that comes from database
+                for(var i = 0; i < item.attributes.length; i++) {
+                    $scope.edititem.value.push(item.attributes[i].value);
+                }
+                //$scope.edititem= angular.copy(item.attributes);
+                item.editmode = true;
+            } else {
+                // no editing
+                item.editmode = false;
+            }
+        };
+        
+        // returns the editMode for the current item (or song)
+        $scope.geteditmode = function(item) {
+            return item.editmode;
+        };
+        
+        
+       // function to delete a item
+        $scope.deleteitem = function(id) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                
+                $http.post("deleteitem.php", {"id" : id})
+                    .then(function (response) {
+                    if (response.status == 200) {
+                        if (response.data.status == 'error') {
+                            alert ('error: ' + response.data.message);
+                        } else {
+                            //successful
+                            $window.location.href ="editlist.html"; // send back to updated editlist page with item deleted
+                        }
+                    } else {
+                        alert('unexpected error');
+                    }
+                });
+            }
+        };
+        
         // is getting curent list id
         $scope.getcurrentlistid = function() {
            $http.post("getcurrentlistid.php")

@@ -13,7 +13,7 @@ $session_id= $_SESSION['account_id']
 $db = connectDB($DBHost, $DBUser, $DBPassword, $DBName);
 
 // get the list id for all the users list
-$query= "SELECT * FROM list where account_id =$session_id";
+$query= "SELECT * FROM list where account_id =$session_id AND visible=1";
 
 // run the query
     $result = queryDB($query, $db);

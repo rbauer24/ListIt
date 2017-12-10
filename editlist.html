@@ -26,6 +26,9 @@
     
     <!-- data controller -->
     <script type="text/javascript" src="data.list.controller.js"></script>
+    
+    <!-- trust Html filter -->
+    <script type="text/javascript" src="list.filter.js"></script>
 
 </head>
 
@@ -53,35 +56,80 @@
                 <!-- problem: how to use form -->
                <p ng-show="enterItemForm.$invalid && enterItemForm.$touched" class="help-block">Please enter some value for this Item.</p>
             </div>
-            <button class="btn btn-default" ng-click=" newitem(newitem.value)" ng-disabled="accountForm.$invalid"> Save/ Add More </button>
+            <button class="btn btn-default" ng-click="newitem(newitem.value)" ng-disabled="accountForm.$invalid"> Save/ Add More </button>
         </form>
     </div>
     
-    <!-- loads up current list information if you are editing an existing list-->
-    
+     <!-- loads up current list information if you are editing an existing list-->
     <!-- needs not to load from last created list but need to load from current list selected-->
-    <div>
        <!-- content to see current list info-->
        <!-- Lists -->
+       
        <div ng-init='getcurrentlistid()'></div>
 <div ng-repeat="list in data | filter:areaEdit">
-    <h2>{{list.name}}</h2>
-<div class="panel panel-default" ng-repeat="item in list.items | filter:query">
-    <div class="panel-heading">
-            <h4>{{item.name}}</h4>
-        </div>
-    <div ng-repeat="attribute in item.attributes">
-        <div ng-if="attribute.type=='text'">
-            <strong>{{attribute.label}}</strong>: {{attribute.value}}
-        </div>
-        <div ng-if="attribute.type=='video'">
-            <div class="embed-responsive embed-responsive-16by9">
-                <span ng-bind-html="attribute.value | trustHtml"></span>
+    <h2>{{list.name}}</h2> 
+    <div class="panel panel-default" ng-repeat="item in list.items | filter:query">
+    <div ng-init="seteditmode(false, item)"></div>
+    
+    <!-- panel in read mode -->
+        <div ng-if="!geteditmode(item)">
+            <div class="panel-heading">
+                <h4>{{item.name}}</h4> 
+            </div>
+            <div class="row">
+                <div class="col-xs-10">
+    
+                    <div ng-repeat="attribute in item.attributes">
+                        
+                        <div ng-if="attribute.type=='text'">
+                            <strong>{{attribute.label}}</strong>: {{attribute.value}}
+                        </div>
+                        <div ng-if="attribute.type=='video'">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <span ng-bind-html="attribute.value | trustHtml"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <p><button class="btn btn-primary" ng-click="seteditmode(true, item)">Edit</button></p>
+                    <p><button class="btn btn-primary" ng-click="deleteitem(item.id)">Delete</button></p> 
+                </div>
             </div>
         </div>
+    
+    <!-- panel in edit mode -->
+        <div ng-if="geteditmode(item)">
+            <div class="panel-heading">
+                 
+            </div>
+            <div class="row">
+                <div class="col-xs-10">
+                    
+                    <form name="enterItemForm" novalidate>
+
+                        <div ng-repeat="attribute in item.attributes track by $index">
+                            <strong>{{attribute.label}}</strong>: {{attribute.value}}
+
+                            {{attribute.label}} <input type="text" class="form-control" ng-model="edititem.value[$index]" required/>
+                            <!-- problem: how to use form -->
+                           <p ng-show="enterItemForm.$invalid && enterItemForm.$touched" class="help-block">Please enter some value for this Item.</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-xs-2">
+                    <p><button class="btn btn-primary" ng-click="updateitem(edititem.value, item.id)">Save</button></p>
+                    <p><button class="btn btn-primary" ng-click="seteditmode(false, item)">Cancel</button></p> 
+                </div>
+            </div>
+        </div>
+    
+    
     </div>
 </div>
+    
+    
+    
+    <!-- content  div closing-->
     </div>
-    
-    
 </html>
